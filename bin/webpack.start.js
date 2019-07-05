@@ -8,8 +8,7 @@ const lessLoader = require.resolve('less-loader');
 const webpack = require('webpack');
 const {
   getStyleLoaders,
-  getBabelLoaderConfig,
-  getHttpsConfig
+  getBabelLoaderConfig
 } = require('./utils');
 const projectRoot = process.cwd();
 const myRoot = __dirname.replace('/bin', '');

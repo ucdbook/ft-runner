@@ -6,6 +6,10 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const lessLoader = require.resolve('less-loader');
 const autoprefixer = require('autoprefixer');
 const projectRoot = process.cwd();
+const {
+  getStyleLoaders,
+  getBabelLoaderConfig
+} = require('./utils');
 
 // 可以避免把 node_modules 里面的依赖包引入打包文件
 const nodeExternals = require('webpack-node-externals');
@@ -15,68 +19,6 @@ let isMini = process.env.npm_lifecycle_event === 'mini' ? true : false;
 let entryName = isMini ? `${name}.min` : `${name}`;
 
 const lessVariables = {};
-
-//babelLoader
-const getBabelLoaderConfig = () => {
-    return {
-      loader: require.resolve('babel-loader'),
-      options: {
-        babelrc: false,
-        presets: [
-          [
-            require.resolve('@babel/preset-env'),
-            {
-              targets: {
-                browsers: ["> 1%", "IE 10"],
-              },
-              modules: false,
-              useBuiltIns: 'entry',
-            }
-          ],
-          require.resolve('@babel/preset-typescript'),
-          require.resolve('@babel/preset-react'),
-        ],
-        plugins: [
-          require.resolve('@babel/plugin-syntax-dynamic-import'),
-          [ require.resolve('@babel/plugin-proposal-decorators'), { legacy: true } ],
-          [ require.resolve('@babel/plugin-proposal-class-properties'), { loose: true } ],
-        ].concat(
-          []
-        ),
-        cacheDirectory: true,
-        compact: true,
-        highlightCode: true,
-      },
-    };
-};
-
-//styleLoaders
-const getStyleLoaders = (isInJs, cssOptions, preProcessor) => {
-    const loaders = [
-        isInJs ?
-        MiniCssExtractPlugin.loader : require.resolve('style-loader'),
-      {
-        loader: cssOptions.modules ? require.resolve('typings-for-css-modules-loader') : require.resolve('css-loader'),
-        //options: cssOptions,
-      },
-      {
-        loader: require.resolve('postcss-loader'),
-        options: {
-          ident: 'postcss',
-          plugins: () => [
-            //require('postcss-flexbugs-fixes'),
-            autoprefixer({
-              flexbox: 'no-2009',
-            }),
-          ],
-        },
-      },
-    ];
-    if (preProcessor) {
-      loaders.push(preProcessor);
-    }
-    return loaders;
-};
 
 module.exports = {
     mode: isMini ? 'production' : 'development',
