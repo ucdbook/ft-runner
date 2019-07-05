@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=0.3,user-scalable=yes">
+    <title>传化组件库</title>
+    <script src="https://static.tf56.com/ehuodi/libs/ie-updater/ieUpdater.min.js?v=1.7" async></script>
+    <script src="//browser-update.org/update.min.js" async></script>
+    <script>
+      if(location.href.indexOf('hl.tf56.com') >= 0) {
+      //生产地址
+      document.writeln('<script src="https://static.tf56.com/frms/dfp_js.js"' + '>' + '<' + '/' + 'script>');
+      } else {
+        //测试地址
+        document.writeln('<script src="https://statictest.tf56.com/frms/dfp_js_test.js"' + '>' + '<' + '/' + 'script>');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="app"></div>
+
+    </div>
+    <noscript>如果你看到这个提示，说明 <strong>您的浏览器没有启用 JavaScript</strong>, 请 <strong>开启 JS</strong>。</noscript>
+  </body>
+</html>
