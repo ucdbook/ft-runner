@@ -1,7 +1,8 @@
 {
   "name": "ft-runner",
   "bin": {
-    "ftRunner": "./cmd.start.js"
+    "ft-runner-start": "./bin/cmd.start.js",
+    "ft-runner-pack": "./bin/cmd.pack.js"
   },
   "version": "0.0.2",
   "description": "for login",
@@ -21,7 +22,8 @@
   ],
   "dependencies": {
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "antd": "^3.10.0"
   },
   "devDependencies": {
     "babel-loader": "^8.0.4",
