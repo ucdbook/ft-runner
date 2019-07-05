@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 const Webpack = require('webpack');
 const projectConfig = require('./webpack.pack.js');
 const compiler = Webpack(projectConfig);

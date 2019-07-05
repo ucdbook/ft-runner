@@ -1,15 +1,19 @@
-var path = require('path');
-var fs = require("fs");
+const path = require('path');
+const fs = require("fs");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const lessLoader = require.resolve('less-loader');
-const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
+const {
+  getStyleLoaders,
+  getBabelLoaderConfig,
+  getHttpsConfig
+} = require('./utils');
 const projectRoot = process.cwd();
 const myRoot = __dirname.replace('/bin', '');
-console.log(2222222222222222222, myRoot)
+const configJson = require(path.resolve(projectRoot, 'abc.json'));
 
 let name = 'index';
 let isMini = process.env.npm_lifecycle_event === 'mini' ? true : false;
@@ -17,67 +21,6 @@ let entryName = isMini ? `${name}.min` : `${name}`;
 
 const lessVariables = {};
 
-//babelLoader
-const getBabelLoaderConfig = () => {
-    return {
-      loader: require.resolve('babel-loader'),
-      options: {
-        babelrc: false,
-        presets: [
-          [
-            require.resolve('@babel/preset-env'),
-            {
-              targets: {
-                browsers: ["> 1%", "IE 10"],
-              },
-              modules: false,
-              useBuiltIns: 'entry',
-            }
-          ],
-          require.resolve('@babel/preset-typescript'),
-          require.resolve('@babel/preset-react'),
-        ],
-        plugins: [
-          require.resolve('@babel/plugin-syntax-dynamic-import'),
-          [ require.resolve('@babel/plugin-proposal-decorators'), { legacy: true } ],
-          [ require.resolve('@babel/plugin-proposal-class-properties'), { loose: true } ],
-        ].concat(
-          []
-        ),
-        cacheDirectory: true,
-        compact: true,
-        highlightCode: true,
-      },
-    };
-};
-
-//styleLoaders
-const getStyleLoaders = (isInJs, cssOptions, preProcessor) => {
-    const loaders = [
-        isInJs ?
-        MiniCssExtractPlugin.loader : require.resolve('style-loader'),
-      {
-        loader: cssOptions.modules ? require.resolve('typings-for-css-modules-loader') : require.resolve('css-loader'),
-        //options: cssOptions,
-      },
-      {
-        loader: require.resolve('postcss-loader'),
-        options: {
-          ident: 'postcss',
-          plugins: () => [
-            //require('postcss-flexbugs-fixes'),
-            autoprefixer({
-              flexbox: 'no-2009',
-            }),
-          ],
-        },
-      },
-    ];
-    if (preProcessor) {
-      loaders.push(preProcessor);
-    }
-    return loaders;
-};
 
 module.exports = {
     mode: 'development',
@@ -98,10 +41,13 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(myRoot, './dist'),
         // host: 'localhost',      // 默认是localhost
-        port: 2225,             // 端口
+        port: configJson.port || 2225,             // 端口
         open: true,             // 自动打开浏览器
         hot: true,               // 开启热更新
-        disableHostCheck: true
+        disableHostCheck: true,
+        proxy: configJson.proxy,
+        //https: configJson.https ? getHttpsConfig() : {},
+        //clientLogLevel: 'warning',
     },
 
     resolve: {
@@ -185,5 +131,5 @@ module.exports = {
 
         
     ]
-}
+};
 

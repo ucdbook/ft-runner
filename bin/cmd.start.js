@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+console.log(22222222222)
 const WebpackDevServer = require('webpack-dev-server');
 const Webpack = require('webpack');
 const projectConfig = require('./webpack.start.js');
