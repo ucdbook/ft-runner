@@ -4,7 +4,7 @@
     "ft-runner-start": "./bin/cmd.start.js",
     "ft-runner-pack": "./bin/cmd.pack.js"
   },
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "for login",
   "main": "./cmd.start.js",
   "scripts": {
@@ -23,9 +23,7 @@
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "antd": "^3.10.0"
-  },
-  "devDependencies": {
+    "antd": "^3.10.0",
     "babel-loader": "^8.0.4",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
