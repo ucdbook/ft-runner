@@ -7,7 +7,7 @@ const lessLoader = require.resolve('less-loader');
 const autoprefixer = require('autoprefixer');
 const projectRoot = process.cwd();
 const configJs = require(path.resolve(projectRoot, 'abc.js'));
-
+const package = require(path.resolve(projectRoot, 'package.json'));
 const {
   getStyleLoaders,
   getBabelLoaderConfig
@@ -33,8 +33,8 @@ let config = {
     output: {
         path: path.resolve(projectRoot, 'dist'),
         filename: '[name].js',
-        //library: 'TfLogin',
-        //libraryTarget: 'umd'
+        library: package.name,
+        libraryTarget: 'umd'
     },
 
     devServer: {
@@ -71,7 +71,7 @@ let config = {
             },
             {
                 test: /\.(ts|tsx|js|jsx|mjs)$/,
-                //exclude: /node_modules/,
+                exclude: /node_modules/,
                 use: [
                   getBabelLoaderConfig(),
                 ],

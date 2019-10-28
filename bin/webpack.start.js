@@ -33,7 +33,7 @@ let config = {
     output: {
         path: path.resolve(myRoot, './dist'),
         filename: '[name].js',
-        library: 'TfLogin',
+        library: 'ft-name',
         libraryTarget: 'umd'
     },
 
