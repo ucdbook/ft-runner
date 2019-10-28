@@ -31,7 +31,7 @@ let config = {
     devtool: isMini ? '': 'source-map',
 
     output: {
-        path: path.resolve(projectRoot, 'dist'),
+        path: path.resolve(projectRoot, 'libs'),
         filename: '[name].js',
         library: package.name,
         libraryTarget: 'umd'

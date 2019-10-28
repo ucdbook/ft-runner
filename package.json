@@ -4,7 +4,7 @@
     "ft-runner-start": "./bin/cmd.start.js",
     "ft-runner-pack": "./bin/cmd.pack.js"
   },
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "for login",
   "main": "./cmd.start.js",
   "scripts": {
