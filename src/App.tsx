@@ -1,5 +1,4 @@
 import * as React from 'react';
-console.log(333333, PROJECTROOT)
 import Tag from '../../../src/index.tsx';
 import templateJson from '../../../demo/index.js';
 import '../../../demo/index.less';

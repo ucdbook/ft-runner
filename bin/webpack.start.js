@@ -12,7 +12,7 @@ const {
 } = require('./utils');
 const projectRoot = process.cwd();
 const myRoot = __dirname.replace('/bin', '');
-const configJson = require(path.resolve(projectRoot, 'abc.json'));
+const configJs = require(path.resolve(projectRoot, 'abc.js'));
 
 let name = 'index';
 let isMini = process.env.npm_lifecycle_event === 'mini' ? true : false;
@@ -21,7 +21,7 @@ let entryName = isMini ? `${name}.min` : `${name}`;
 const lessVariables = {};
 
 
-module.exports = {
+let config = {
     mode: 'development',
 
     entry: {
@@ -40,11 +40,11 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(myRoot, './dist'),
         // host: 'localhost',      // 默认是localhost
-        port: configJson.port || 2225,             // 端口
+        port: 2225,             // 端口
         open: true,             // 自动打开浏览器
         hot: true,               // 开启热更新
         disableHostCheck: true,
-        proxy: configJson.proxy,
+        proxy: {},
         //https: configJson.https ? getHttpsConfig() : {},
         //clientLogLevel: 'warning',
     },
@@ -123,7 +123,8 @@ module.exports = {
         }),
 
         new webpack.DefinePlugin({
-          'PROJECTROOT': `'${projectRoot}'`
+          'PROJECTROOT': `'${projectRoot}'`,
+          'DEMO_URL': `'${projectRoot}/demo/index'`
         }),
 
         new webpack.HotModuleReplacementPlugin()
@@ -131,4 +132,14 @@ module.exports = {
         
     ]
 };
+config = configJs(config);
+
+if(config.exportType === 'function') {
+  config.entry = {
+    [entryName]: path.resolve(myRoot, './function.tsx')
+  }
+  delete config.exportType;
+}
+
+module.exports = config;
 

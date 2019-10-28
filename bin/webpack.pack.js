@@ -6,6 +6,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const lessLoader = require.resolve('less-loader');
 const autoprefixer = require('autoprefixer');
 const projectRoot = process.cwd();
+const configJs = require(path.resolve(projectRoot, 'abc.js'));
+
 const {
   getStyleLoaders,
   getBabelLoaderConfig
@@ -19,8 +21,7 @@ let isMini = process.env.npm_lifecycle_event === 'mini' ? true : false;
 let entryName = isMini ? `${name}.min` : `${name}`;
 
 const lessVariables = {};
-
-module.exports = {
+let config = {
     mode: isMini ? 'production' : 'development',
 
     entry: {
@@ -32,8 +33,8 @@ module.exports = {
     output: {
         path: path.resolve(projectRoot, 'dist'),
         filename: '[name].js',
-        library: 'TfLogin',
-        libraryTarget: 'umd'
+        //library: 'TfLogin',
+        //libraryTarget: 'umd'
     },
 
     devServer: {
@@ -70,22 +71,22 @@ module.exports = {
             },
             {
                 test: /\.(ts|tsx|js|jsx|mjs)$/,
-                exclude: /node_modules/,
+                //exclude: /node_modules/,
                 use: [
                   getBabelLoaderConfig(),
                 ],
             },
             {
                 test: /\.css$/, // 解析css
-                include: path.join(projectRoot, 'src'), 
-                use: getStyleLoaders(true, {
+                include: path.join(projectRoot), 
+                use: getStyleLoaders(false, {
                     importLoaders: 1,
                 }),
             },
             {
                 test: /\.less$/, // 解析less
-                include: path.join(projectRoot, 'src'), 
-                use: getStyleLoaders(true,
+                include: path.join(projectRoot), 
+                use: getStyleLoaders(false,
                     {
                       importLoaders: 1,
                     },
@@ -102,7 +103,7 @@ module.exports = {
     },
 
     plugins: [
-        new MiniCssExtractPlugin({
+        /*new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
         }),
@@ -113,7 +114,17 @@ module.exports = {
             fs.writeFile(lessFilePath, text, function() {
                 console.log('success copy less file');
             });
-        }
+        }*/
     ]
 }
+
+config = configJs(config);
+
+if(config.exportType === 'function') {
+    config.entry = {
+        [entryName]: path.resolve(projectRoot, 'index.js')
+    }
+    delete config.exportType;
+}
+module.exports = config;
 

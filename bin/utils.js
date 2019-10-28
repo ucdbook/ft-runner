@@ -136,7 +136,7 @@ exports.getStyleLoaders = (isInJs, cssOptions, preProcessor) => {
         MiniCssExtractPlugin.loader : require.resolve('style-loader'),
       {
         loader: cssOptions.modules ? require.resolve('typings-for-css-modules-loader') : require.resolve('css-loader'),
-        //options: cssOptions,
+        options: cssOptions,
       },
       {
         loader: require.resolve('postcss-loader'),
