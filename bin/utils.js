@@ -116,6 +116,7 @@ exports.getBabelLoaderConfig = () => {
           require.resolve('@babel/preset-react'),
         ],
         plugins: [
+          require.resolve('@babel/plugin-transform-object-assign'),
           require.resolve('@babel/plugin-syntax-dynamic-import'),
           [ require.resolve('@babel/plugin-proposal-decorators'), { legacy: true } ],
           [ require.resolve('@babel/plugin-proposal-class-properties'), { loose: true } ],
