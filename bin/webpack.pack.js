@@ -105,7 +105,7 @@ let config = {
             {
               test: lessModuleRegex,
               use: getStyleLoaders(
-                true,
+                false,
                 {
                   importLoaders: 2,
                   modules: true,
