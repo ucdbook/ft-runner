@@ -1,7 +1,6 @@
 import * as React from 'react';
-import Tag from '../../../src/index.tsx';
+import Tag from '../../../index';
 import templateJson from '../../../demo/index.js';
-import '../../../demo/index.less';
 
 class App extends React.Component {
     constructor(prop) {
