@@ -19,7 +19,7 @@ let isMini = process.env.npm_lifecycle_event === 'mini' ? true : false;
 let entryName = isMini ? `${name}.min` : `${name}`;
 
 const lessVariables = {};
-
+const lessModuleRegex = /\.module\.(scss|less)$/;
 
 let config = {
     mode: 'development',
@@ -92,6 +92,7 @@ let config = {
             },
             {
                 test: /\.less$/, // 解析less
+                exclude: lessModuleRegex,
                 include: [projectRoot, path.join(myRoot, 'src')], 
                 use: getStyleLoaders(true,
                     {
@@ -105,7 +106,27 @@ let config = {
                       },
                     }
                 ),
-            }
+            },
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                true,
+                {
+                  importLoaders: 2,
+                  modules: true,
+                  localIdentName: '[path][name]__[local]',
+                  namedExport: true,
+                  camelCase: true,
+                },
+                {
+                  loader: lessLoader,
+                  options: {
+                    javascriptEnabled: true,
+                    modifyVars: lessVariables,
+                  },
+                },
+              ),
+            },
         ]
     },
 

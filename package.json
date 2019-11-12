@@ -4,7 +4,7 @@
     "ft-runner-start": "./bin/cmd.start.js",
     "ft-runner-pack": "./bin/cmd.pack.js"
   },
-  "version": "0.0.13",
+  "version": "0.0.16",
   "description": "for login",
   "main": "./cmd.start.js",
   "scripts": {
@@ -32,6 +32,8 @@
     "@babel/preset-typescript": "^7.1.0",
     "@babel/runtime": "^7.6.3",
     "antd": "^3.10.0",
+    "core-js": "^2.5.3",
+    "react-hot-loader": "^4.3.11",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
     "chalk": "^2.4.1",
